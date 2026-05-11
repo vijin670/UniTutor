@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model University {
+  id          String   @id @default(uuid())
+  name        String
+  domain      String   @unique
+  location    String?
+  established Int?
+  description String?
+  type        String?  // "Private", "Government", "Deemed"
+  website     String?
+  createdAt   DateTime @default(now())
+
+  users       User[]
+  courses     Course[]
+  schedules   Schedule[]
+  escalations QueryEscalation[]
+}
+
+model User {
+  id            String      @id @default(uuid())
+  email         String      @unique
+  passwordHash  String
+  name          String
+  role          String      // SUPER_ADMIN, ADMIN, FACULTY, STUDENT
+  avatarUrl     String?
+  bio           String?
+  phone         String?
+  address       String?
+  department    String?
+  year          Int?
+  semester      Int?
+  enrollmentNo  String?
+  designation   String?
+  qualification String?
+  joinDate      DateTime?
+  universityId  String?
+  university    University? @relation(fields: [universityId], references: [id])
+  createdAt     DateTime    @default(now())
+
+  coursesTaught Course[]
+  escalations  QueryEscalation[]
+  marks        Mark[]
+  attendance   Attendance[]
+  feePayments  FeePayment[]
+}
+
+model Course {
+  id           String     @id @default(uuid())
+  title        String
+  code         String?
+  description  String
+  credits      Int?
+  semester     Int?
+  department   String?
+  universityId String
+  university   University @relation(fields: [universityId], references: [id])
+  facultyId    String
+  faculty      User       @relation(fields: [facultyId], references: [id])
+
+  schedules   Schedule[]
+  escalations QueryEscalation[]
+  marks       Mark[]
+  attendance  Attendance[]
+}
+
+model Schedule {
+  id           String     @id @default(uuid())
+  eventName    String
+  date         DateTime
+  courseId      String?
+  course       Course?    @relation(fields: [courseId], references: [id])
+  universityId String
+  university   University @relation(fields: [universityId], references: [id])
+}
+
+model QueryEscalation {
+  id           String     @id @default(uuid())
+  question     String
+  answer       String?
+  resolved     Boolean    @default(false)
+  studentId    String
+  student      User       @relation(fields: [studentId], references: [id])
+  courseId      String?
+  course       Course?    @relation(fields: [courseId], references: [id])
+  universityId String
+  university   University @relation(fields: [universityId], references: [id])
+  createdAt    DateTime   @default(now())
+}
+
+model Mark {
+  id        String   @id @default(uuid())
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id])
+  courseId   String
+  course    Course   @relation(fields: [courseId], references: [id])
+  examName  String
+  score     Float
+  maxScore  Float
+  date      DateTime @default(now())
+}
+
+model Attendance {
+  id        String   @id @default(uuid())
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id])
+  courseId   String?
+  course    Course?  @relation(fields: [courseId], references: [id])
+  date      DateTime
+  status    String   // PRESENT, ABSENT, LATE, EXCUSED
+}
+
+model FeePayment {
+  id        String   @id @default(uuid())
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id])
+  amountDue  Float
+  amountPaid Float
+  dueDate   DateTime
+  status    String   // PAID, PENDING, OVERDUE
+}
