@@ -361,7 +361,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 👨‍💻 Author
 
-**Vijin Raj**
+**Vijin Ajai**
 
 - GitHub: [@vijin670](https://github.com/vijin670)
 
