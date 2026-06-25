@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Users, BookOpen, GraduationCap, Building2 } from 'lucide-react';
+import { API_URL } from '../config';
 
 const UniversityCommunity = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const UniversityCommunity = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/universities/${id}/community`)
+    axios.get(`${API_URL}/api/universities/${id}/community`)
       .then(r => setData(r.data))
       .catch(e => console.error(e))
       .finally(() => setLoading(false));

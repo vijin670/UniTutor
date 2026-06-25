@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { GraduationCap, Brain, Building2, Users, BookOpen, Shield, BarChart3, MessageSquare, ChevronRight, Zap } from 'lucide-react';
+import { API_URL } from '../config';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -10,8 +11,8 @@ const LandingPage = () => {
   const [animatedStats, setAnimatedStats] = useState({ universities: 0, students: 0, faculty: 0, courses: 0 });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/universities').then(r => setUniversities(r.data)).catch(() => {});
-    axios.get('http://localhost:5000/api/universities/stats/global').then(r => setStats(r.data)).catch(() => {});
+    axios.get(`${API_URL}/api/universities`).then(r => setUniversities(r.data)).catch(() => {});
+    axios.get(`${API_URL}/api/universities/stats/global`).then(r => setStats(r.data)).catch(() => {});
   }, []);
 
   useEffect(() => {

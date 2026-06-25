@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { User, BookOpen, Calendar, CheckSquare, BarChart2, CreditCard, LogOut, GraduationCap } from 'lucide-react';
 import AIPanel from '../components/chat/AIPanel';
+import { API_URL } from '../config';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -18,7 +19,7 @@ const StudentDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/student/dashboard');
+      const res = await axios.get(`${API_URL}/api/student/dashboard`);
       setData(res.data);
       setBio(res.data.bio || '');
       setPhone(res.data.phone || '');
@@ -31,7 +32,7 @@ const StudentDashboard = () => {
 
   const handleProfileSave = async () => {
     try {
-      await axios.put('http://localhost:5000/api/student/profile', { bio, phone, address });
+      await axios.put(`${API_URL}/api/student/profile`, { bio, phone, address });
       setEditMode(false);
       fetchData();
     } catch (e) { console.error(e); }

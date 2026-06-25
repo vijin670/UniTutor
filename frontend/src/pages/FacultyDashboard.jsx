@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BookOpen, Users, MessageSquare, LogOut, User, AlertCircle } from 'lucide-react';
+import { API_URL } from '../config';
 
 const FacultyDashboard = () => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -12,7 +13,7 @@ const FacultyDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/faculty/dashboard')
+    axios.get(`${API_URL}/api/faculty/dashboard`)
       .then(r => setData(r.data))
       .catch(e => console.error(e))
       .finally(() => setLoading(false));

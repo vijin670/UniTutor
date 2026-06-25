@@ -24,8 +24,12 @@ app.use('/api/faculty', facultyRoutes);
 app.use('/api/super-admin', superAdminRoutes);
 app.use('/api/universities', universityRoutes);
 
-const PORT = process.env.PORT || 5000;
+// Only start listening when running locally (not on Vercel serverless)
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+export default app;

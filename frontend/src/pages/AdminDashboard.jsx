@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Building2, Users, BookOpen, GraduationCap, LogOut, UserCheck, Calendar, Search } from 'lucide-react';
+import { API_URL } from '../config';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -13,7 +14,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/admin/dashboard')
+    axios.get(`${API_URL}/api/admin/dashboard`)
       .then(r => setData(r.data))
       .catch(e => console.error(e))
       .finally(() => setLoading(false));

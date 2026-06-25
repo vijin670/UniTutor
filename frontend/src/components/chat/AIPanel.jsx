@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Send, Bot } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const AIPanel = () => {
   const [messages, setMessages] = useState([{ text: "Hi! I have your complete academic context. Ask me about your schedule, marks, fees, or anything!", isBot: true }]);
@@ -21,7 +22,7 @@ const AIPanel = () => {
     setInput('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/chat/ask', { question: userMsg });
+      const res = await axios.post(`${API_URL}/api/chat/ask`, { question: userMsg });
       setMessages(prev => [...prev, { text: res.data.answer, isBot: true }]);
     } catch (error) {
       setMessages(prev => [...prev, { text: "Network error. Make sure backend is running.", isBot: true }]);

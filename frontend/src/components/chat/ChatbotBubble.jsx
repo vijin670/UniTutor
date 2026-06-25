@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { MessageSquare, X, Send } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const ChatbotBubble = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ const ChatbotBubble = () => {
     setInput('');
 
     try {
-      const res = await axios.post('http://localhost:5000/api/chat/ask', { question: userMsg });
+      const res = await axios.post(`${API_URL}/api/chat/ask`, { question: userMsg });
       setMessages(prev => [...prev, { text: res.data.answer, isBot: true }]);
     } catch (error) {
       setMessages(prev => [...prev, { text: "Sorry, I'm having trouble connecting right now.", isBot: true }]);

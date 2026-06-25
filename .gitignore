@@ -9,6 +9,7 @@ node_modules/
 # Build outputs
 dist/
 build/
+.vercel/
 
 # Logs
 *.log
@@ -24,3 +25,7 @@ Thumbs.db
 
 # Prisma generated
 generated/prisma/
+
+# Database files
+*.db
+

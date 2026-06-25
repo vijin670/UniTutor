@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Building2, Users, BookOpen, GraduationCap, LogOut, Shield, Search, ChevronRight, Globe, BarChart3 } from 'lucide-react';
+import { API_URL } from '../config';
 
 const SuperAdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -18,9 +19,9 @@ const SuperAdminDashboard = () => {
     const fetchData = async () => {
       try {
         const [dash, users, unis] = await Promise.all([
-          axios.get('http://localhost:5000/api/super-admin/dashboard'),
-          axios.get('http://localhost:5000/api/super-admin/users'),
-          axios.get('http://localhost:5000/api/super-admin/universities'),
+          axios.get(`${API_URL}/api/super-admin/dashboard`),
+          axios.get(`${API_URL}/api/super-admin/users`),
+          axios.get(`${API_URL}/api/super-admin/universities`),
         ]);
         setData(dash.data);
         setAllUsers(users.data);
